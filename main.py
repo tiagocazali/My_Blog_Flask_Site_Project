@@ -1,6 +1,9 @@
 from flask import Flask, render_template, url_for
+from forms import FormLogin, FormCreateAccount
 
 app = Flask(__name__)
+
+app.config['SECRET_KEY'] = 'cdcb1a8087026933fca6ceae9fa71136'
 
 users_list = ["Tiago", "Robert", "Ana", "Vanessa", "Marcus", "Andi"]
 
@@ -21,7 +24,9 @@ def contact():
 
 @app.route("/login")
 def login():
-    return render_template("login.html")
+    form_createAccount = FormCreateAccount()
+    form_login = FormLogin()
+    return render_template("login.html", form_createAccount=form_createAccount, form_login=form_login)
 
 
 
