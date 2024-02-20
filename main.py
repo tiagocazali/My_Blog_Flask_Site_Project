@@ -22,7 +22,7 @@ def contact():
     return render_template("contact.html")
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form_createAccount = FormCreateAccount()
     form_login = FormLogin()
