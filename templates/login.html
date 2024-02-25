@@ -12,15 +12,43 @@
         <div class="col">
 
             <form method="post" action="" class="border p-4 mt-2">
+                {{ form_login.csrf_token }}
                 <legend>Login</legend>
                 <fieldset>
                     <div class="form-group">
                         {{ form_login.email.label(class="form-control-label") }}
-                        {{ form_login.email(class="form-control") }}
+
+                        <!-- Check for invalid e-mail -->
+                        {% if form_login.email.errors %}
+                            {{ form_login.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_login.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form_login.email(class="form-control") }}
+
+                        {% endif %}
+                        
                     </div>
                     <div class="form-group">
                         {{ form_login.password.label(class="form-control-label") }}
-                        {{ form_login.password(class="form-control") }}
+                       
+                        <!-- Check for invalid password -->
+                        {% if form_login.password.errors %}
+                            {{ form_login.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_login.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                            
+                        {% else %}
+                            {{ form_login.password(class="form-control") }}
+
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_login.remember_me.label(class="form-check-label") }}
@@ -37,23 +65,78 @@
         <!--Start Create Account--> 
         <div class="col">
             <form method="post" action="" class="border p-4 mt-2">
+                {{ form_createAccount.csrf_token }}
                 <legend>Create Account</legend>
                 <fieldset>
                     <div class="form-group">
                         {{ form_createAccount.username.label(class="form-control-label") }}
-                        {{ form_createAccount.username(class="form-control") }}
+                        
+                        <!-- Check for invalid username -->
+                        {% if form_createAccount.username.errors %}
+                            {{ form_createAccount.username(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_createAccount.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                            
+                        {% else %}
+                            {{ form_createAccount.username(class="form-control") }}
+
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_createAccount.email.label(class="form-control-label") }}
-                        {{ form_createAccount.email(class="form-control") }}
+                         
+                        <!-- Check for invalid e-mail -->
+                        {% if form_createAccount.email.errors %}
+                        {{ form_createAccount.email(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_createAccount.email.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                         
+                     {% else %}
+                         {{ form_createAccount.email(class="form-control") }}
+
+                     {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_createAccount.password.label(class="form-control-label") }}
-                        {{ form_createAccount.password(class="form-control") }}
+                        <div class="form-group">
+                            {{ form_createAccount.email.label(class="form-control-label") }}
+                             
+                            <!-- Check for invalid password -->
+                            {% if form_createAccount.password.errors %}
+                            {{ form_createAccount.password(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_createAccount.password.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                             
+                         {% else %}
+                             {{ form_createAccount.password(class="form-control") }}
+    
+                         {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_createAccount.confirmation.label(class="form-control-label") }}
-                        {{ form_createAccount.confirmation(class="form-control") }}
+                        
+                        <!-- Check for invalid password confirmation-->
+                        {% if form_createAccount.confirmation.errors %}
+                        {{ form_createAccount.confirmation(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_createAccount.confirmation.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                         
+                     {% else %}
+                         {{ form_createAccount.confirmation(class="form-control") }}
+
+                     {% endif %}
                     </div>
                 </fieldset>
                 {{ form_createAccount.button_submit_create_account(class="btn btn-primary mt-2") }}
