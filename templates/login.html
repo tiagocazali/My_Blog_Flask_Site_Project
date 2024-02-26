@@ -97,10 +97,10 @@
                             {% endfor %}
                         </div>
                          
-                     {% else %}
-                         {{ form_createAccount.email(class="form-control") }}
+                        {% else %}
+                            {{ form_createAccount.email(class="form-control") }}
 
-                     {% endif %}
+                        {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_createAccount.password.label(class="form-control-label") }}
@@ -116,10 +116,10 @@
                                 {% endfor %}
                             </div>
                              
-                         {% else %}
-                             {{ form_createAccount.password(class="form-control") }}
+                            {% else %}
+                                {{ form_createAccount.password(class="form-control") }}
     
-                         {% endif %}
+                            {% endif %}
                     </div>
                     <div class="form-group">
                         {{ form_createAccount.confirmation.label(class="form-control-label") }}
@@ -133,10 +133,10 @@
                             {% endfor %}
                         </div>
                          
-                     {% else %}
-                         {{ form_createAccount.confirmation(class="form-control") }}
+                        {% else %}
+                            {{ form_createAccount.confirmation(class="form-control") }}
 
-                     {% endif %}
+                        {% endif %}
                     </div>
                 </fieldset>
                 {{ form_createAccount.button_submit_create_account(class="btn btn-primary mt-2") }}
