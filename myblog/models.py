@@ -1,4 +1,4 @@
-from main import database
+from myblog import database
 from datetime import datetime
 
 class User(database.Model):
@@ -17,3 +17,4 @@ class Post(database.Model):
     title = database.Column(database.String, nullable=False)
     body = database.Column(database.Text, nullable=False)
     create_date = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
+
