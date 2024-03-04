@@ -6,9 +6,9 @@ class User(database.Model):
     username = database.Column(database.String, nullable=False)
     email = database.Column(database.String, nullable=False, unique=True)
     password = database.Column(database.String, nullable=False)
-    photo_profile = database.Column(database.String, default="default.jpg")
-    courses = database.Column(database.String, nullable=False, default="No Courses")
-    posts = database.relationship("Post", backref="author", lazy=True)  
+    photo_profile = database.Column(database.String, default='default.jpg')
+    posts = database.relationship('Post', backref='author', lazy=True)  
+    courses = database.Column(database.String, nullable=False, default='None')
 
 
 class Post(database.Model):
@@ -16,5 +16,4 @@ class Post(database.Model):
     title = database.Column(database.String, nullable=False)
     body = database.Column(database.Text, nullable=False)
     create_date = database.Column(database.DateTime, nullable=False, default=datetime.utcnow)
-    user_ID = database.Column(database.Integer, database.ForeignKey("user.id"), nullable=False)
-
+    user_ID = database.Column(database.Integer, database.ForeignKey('user.id'), nullable=False)
