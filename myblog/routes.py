@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request
 from myblog import app, database, bcrypt
 from myblog.forms import FormCreateAccount, FormLogin
 from myblog.models import User
+from flask_login import login_user
 
 users_list = ["Tiago", "Robert", "Ana", "Vanessa", "Marcus", "Andi"]
 
@@ -26,8 +27,14 @@ def login():
     form_login = FormLogin()
 
     if form_login.validate_on_submit() and "button_submit_login" in request.form:
-        flash(f"Login successful! - Welcome {form_login.email.data}", "alert-success")
-        return redirect(url_for("home"))
+        user = User.query.filter_by(email=form_login.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form_login.password.data):
+            login_user(user, remember=form_login.remember_me.data)
+            flash(f"Login successful! - Welcome {form_login.email.data}", "alert-success")
+            return redirect(url_for("home"))
+        else:
+            flash(f"Login Error! - Incorrect e-mail or password", "alert-danger")            
+
 
     if form_createAccount.validate_on_submit() and "button_submit_create_account" in request.form:
         with app.app_context():
