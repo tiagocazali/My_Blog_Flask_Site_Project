@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash, request
-from myblog import app, database
+from myblog import app, database, bcrypt
 from myblog.forms import FormCreateAccount, FormLogin
 from myblog.models import User
 
@@ -31,7 +31,8 @@ def login():
 
     if form_createAccount.validate_on_submit() and "button_submit_create_account" in request.form:
         with app.app_context():
-            user = User(username=form_createAccount.username.data, email=form_createAccount.email.data, password=form_createAccount.password.data)
+            crypt_password = bcrypt.generate_password_hash(form_createAccount.password.data)
+            user = User(username=form_createAccount.username.data, email=form_createAccount.email.data, password=crypt_password)
             database.session.add(user)
             database.session.commit()
             flash(f"New account created! - Welcome {form_createAccount.email.data}", "alert-success") 
