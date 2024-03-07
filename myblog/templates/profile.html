@@ -1,8 +1,52 @@
 {% extends "base.html" %}
  
-    {% block body %}
-        <div class="container">
-            <h1>User Profile page</h1>
+{% block body %}
+<div1 class="container d-flex justify-content-center">
 
-        </div>
-    {% endblock %}
+    <div2 class="card p-3">
+
+        <div3 class="d-flex align-items-center">
+
+            <div4 class="image pe-2">
+                <img src="{{ photo_profile }}" class="rounded" width="170" >
+            </div4>
+
+            <div5 class="ml-3 w-100">
+            
+                <h4 class="mb-0 mt-0">{{ current_user.username }}</h4>
+                <span>{{ current_user.email }}</span>
+
+                <div6 class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+                    <div7 class="d-flex flex-column">
+                        <span class="articles">Posts</span>
+                        <span class="number1">123</span>
+                    </div7>
+
+                    <div8 class="d-flex flex-column">
+                        <span class="followers">Courses</span>
+                        <span class="number2">0</span>
+                    </div8>
+                    
+                </div6>
+
+                <div10 class="button mt-2 d-flex flex-row align-items-center">
+                    <a href="{{ url_for('edit_profile') }}">
+                        <button class="btn btn-sm btn-primary w-100 ml-2">Edit Profile</button>  
+                    </a>
+                </div10>
+
+
+            </div5>
+
+        </div3>
+        
+    </div2>
+        
+</div1>
+
+<!-- when user click in Edit Profile, the form will appear here -->
+{% block edit_profile%}
+{% endblock %}
+
+{% endblock %}

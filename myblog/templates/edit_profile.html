@@ -1,0 +1,63 @@
+{% extends "profile.html" %}
+
+{% block edit_profile%}
+<div class="container">
+    <hr>
+
+    <div1 class="row">
+        
+        <div2 class="col">
+
+            <form method="post" action="" class="border p-4 mt-2">
+                {{ form_edit_profile.csrf_token }}
+                
+                <fieldset>
+                    <div3 class="form-group">
+                        {{ form_edit_profile.username.label(class="form-control-label") }}
+
+                        <!-- Check for invalid username -->
+                        {% if form_edit_profile.username.errors %}
+                            {{ form_edit_profile.username(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_edit_profile.username.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form_edit_profile.username(class="form-control") }}
+
+                        {% endif %}
+                    </div3>
+
+                    <div4 class="form-group">
+                        {{ form_edit_profile.email.label(class="form-control-label") }}
+
+                        <!-- Check for invalid e-mail -->
+                        {% if form_edit_profile.email.errors %}
+                            {{ form_edit_profile.email(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_edit_profile.email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            {{ form_edit_profile.email(class="form-control") }}
+
+                        {% endif %}
+                    </div4>
+
+                </fieldset>
+
+                {{ form_edit_profile.button_save_changes(class="btn btn-primary mt-2") }}
+                
+            </form>
+
+        </div2>
+
+    </div1> <!--End Row--> 
+
+</div> <!--End Container-->
+
+{% endblock %}
