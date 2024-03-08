@@ -1,8 +1,12 @@
 from flask import render_template, redirect, url_for, flash, request
+from wtforms import EmailField
 from myblog import app, database, bcrypt
 from myblog.forms import FormCreateAccount, FormLogin, FormEditProfile
 from myblog.models import User
 from flask_login import login_user, logout_user, current_user, login_required
+from PIL import Image
+import secrets
+import os
 
 users_list = ["Tiago", "Robert", "Ana", "Vanessa", "Marcus", "Andi"]
 
@@ -72,8 +76,38 @@ def profile():
 @login_required
 def edit_profile():
     form_edit_profile = FormEditProfile()
+
     photo_profile = url_for("static", filename=f"photos_profile/{current_user.photo_profile}")
+    
+    if form_edit_profile.validate_on_submit():
+        current_user.email = form_edit_profile.email.data
+        current_user.username = form_edit_profile.username.data
+        if form_edit_profile.photo_profile.data: 
+            new_photo = save_photo(form_edit_profile.photo_profile.data)
+            current_user.photo_profile = new_photo
+        database.session.commit()
+        flash("updated Successfully", "alert-success")
+        return redirect(url_for("profile"))
+    else:
+        #Automatic fill the form with users data
+        form_edit_profile.username.data = current_user.username
+        form_edit_profile.email.data = current_user.email
+
+    
     return render_template("edit_profile.html", photo_profile=photo_profile, form_edit_profile=form_edit_profile)
+
+
+def save_photo(photo):
+    code = secrets.token_hex(8)
+    name, extension = os.path.splitext(photo.filename)
+    photo_name = name + code + extension
+    local_path = os.path.join(app.root_path, 'static/photos_profile', photo_name)
+    size = (200, 200)
+    new_photo = Image.open(photo)
+    new_photo.thumbnail(size)
+    new_photo.save(local_path)
+
+    return photo_name
 
 
 @app.route("/post/create")

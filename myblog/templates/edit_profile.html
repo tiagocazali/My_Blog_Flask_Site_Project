@@ -7,11 +7,14 @@
     <div1 class="row">
         
         <div2 class="col">
+            <h3>Edit Profile</h3>
 
-            <form method="post" action="" class="border p-4 mt-2">
+            <form method="post" action="" class="border p-4 mt-2" enctype="multipart/form-data">
                 {{ form_edit_profile.csrf_token }}
                 
                 <fieldset>
+
+                    <!-- Username  -->
                     <div3 class="form-group">
                         {{ form_edit_profile.username.label(class="form-control-label") }}
 
@@ -30,6 +33,7 @@
                         {% endif %}
                     </div3>
 
+                    <!-- E-mail -->
                     <div4 class="form-group">
                         {{ form_edit_profile.email.label(class="form-control-label") }}
 
@@ -47,6 +51,19 @@
 
                         {% endif %}
                     </div4>
+
+                    <!-- Photo -->
+                    <div5 class="form-group">
+                        {{ form_edit_profile.photo_profile.label}}
+                        {{ form_edit_profile.photo_profile(class="form-control-file") }}
+                        
+                        <!-- Check for error in file upload -->
+                        {% if form_edit_profile.photo_profile.errors %}
+                            {% for error in form_edit_profile.photo_profile.errors %}
+                               <span class="text-danger"> {{ error }} </span><br>
+                            {% endfor %}
+                        {% endif %}
+                    </div5>
 
                 </fieldset>
 
