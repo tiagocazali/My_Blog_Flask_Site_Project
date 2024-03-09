@@ -1,3 +1,4 @@
+from tkinter.font import BOLD
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
@@ -35,6 +36,14 @@ class FormEditProfile(FlaskForm):
     email = StringField("E-mail: ", validators=[DataRequired(), Email()] )
     photo_profile = FileField("Update Photo Profile", validators=[FileAllowed(["jpg", "png", "jpeg"])] )
     button_save_changes = SubmitField("Save Changes")
+
+    course_webdesigner = BooleanField("Web Designer - Programming")
+    course_sql = BooleanField("SQL - Data base")
+    course_python = BooleanField("Python - Programming")
+    course_javascript = BooleanField("JavaScript - Programming")
+    course_powerpoint = BooleanField("PowerPoint - Office")
+    course_excel = BooleanField("Excel - Office")
+    course_git = BooleanField("Git and GitHub")
    
     def validate_email(self, email):
         if current_user.email != email.data:

@@ -1,21 +1,23 @@
 {% extends "base.html" %}
  
 {% block body %}
-<div class="container">
+<div1 class="container">
 
     <h1>Login or Create our Account!</h1>
     <hr>
 
-    <div class="row">
+    <div2 class="row">
         
         <!--Start LOGIN--> 
-        <div class="col">
+        <div3 class="col">
 
             <form method="post" action="" class="border p-4 mt-2">
                 {{ form_login.csrf_token }}
                 <legend>Login</legend>
                 <fieldset>
-                    <div class="form-group">
+
+                    <!-- e-mail -->
+                    <div4 class="form-group">
                         {{ form_login.email.label(class="form-control-label") }}
 
                         <!-- Check for invalid e-mail -->
@@ -32,9 +34,10 @@
 
                         {% endif %}
                         
-                    </div>
+                    </div4>
 
-                    <div class="form-group">
+                    <!-- Password -->
+                    <div5 class="form-group">
                         {{ form_login.password.label(class="form-control-label") }}
                        
                         <!-- Check for invalid password -->
@@ -50,28 +53,34 @@
                             {{ form_login.password(class="form-control") }}
 
                         {% endif %}
-                    </div>
+                    </div5>
 
-                    <div class="form-group">
+                    <!-- Remember Password - Check Box -->
+                    <div6 class="form-group">
                         {{ form_login.remember_me.label(class="form-check-label") }}
                         {{ form_login.remember_me(class="form-check-input") }}
-                    </div>
+                    </div6>
 
                 </fieldset>
+                <!-- Button Login -->
                 {{ form_login.button_submit_login(class="btn btn-primary mt-2") }}
+
             </form>
 
-        </div>
+        </div3>
         <!--End div Login--> 
         
 
         <!--Start Create Account--> 
-        <div class="col">
+        <div7 class="col">
+
             <form method="post" action="" class="border p-4 mt-2">
                 {{ form_createAccount.csrf_token }}
                 <legend>Create Account</legend>
                 <fieldset>
-                    <div class="form-group">
+
+                    <!-- Username -->
+                    <div8 class="form-group">
                         {{ form_createAccount.username.label(class="form-control-label") }}
                         
                         <!-- Check for invalid username -->
@@ -87,9 +96,10 @@
                             {{ form_createAccount.username(class="form-control") }}
 
                         {% endif %}
-                    </div>
+                    </div8>
 
-                    <div class="form-group">
+                    <!-- E-mail -->
+                    <div9 class="form-group">
                         {{ form_createAccount.email.label(class="form-control-label") }}
                          
                         <!-- Check for invalid e-mail -->
@@ -105,9 +115,10 @@
                             {{ form_createAccount.email(class="form-control") }}
 
                         {% endif %}
-                    </div>
+                    </div9>
 
-                    <div class="form-group">
+                    <!-- Password -->
+                    <div10 class="form-group">
                         {{ form_createAccount.password.label(class="form-control-label") }}
                                                      
                         <!-- Check for invalid password -->
@@ -123,9 +134,10 @@
                             {{ form_createAccount.password(class="form-control") }}
 
                         {% endif %}
-                    </div>
+                    </div10>
 
-                    <div class="form-group">
+                    <!-- Confirm Password -->
+                    <div11 class="form-group">
                         {{ form_createAccount.confirmation.label(class="form-control-label") }}
                         
                         <!-- Check for invalid password confirmation-->
@@ -141,14 +153,17 @@
                             {{ form_createAccount.confirmation(class="form-control") }}
 
                         {% endif %}
-                    </div>
+                    </div11>
+
                 </fieldset>
+                <!-- Button Create Account -->
                 {{ form_createAccount.button_submit_create_account(class="btn btn-primary mt-2") }}
+
             </form>
 
-        </div> <!--End Div Create Account--> 
+        </div7> <!--End Div Create Account--> 
 
-    </div> <!--End Row--> 
+    </div2> <!--End Row--> 
 
-</div> <!--End Container--> 
+</div1> <!--End Container--> 
 {% endblock %}

@@ -85,6 +85,7 @@ def edit_profile():
         if form_edit_profile.photo_profile.data: 
             new_photo = save_photo(form_edit_profile.photo_profile.data)
             current_user.photo_profile = new_photo
+        current_user.courses = update_courses_list(form_edit_profile)
         database.session.commit()
         flash("updated Successfully", "alert-success")
         return redirect(url_for("profile"))
@@ -106,8 +107,16 @@ def save_photo(photo):
     new_photo = Image.open(photo)
     new_photo.thumbnail(size)
     new_photo.save(local_path)
-
     return photo_name
+
+
+def update_courses_list(form):
+    courses_list = []
+    for field in form:
+        if "course_" in field.name:
+            if field.data:
+                courses_list.append(field.label.text)
+    return ';'.join(courses_list)
 
 
 @app.route("/post/create")

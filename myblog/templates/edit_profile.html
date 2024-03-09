@@ -7,7 +7,7 @@
     <div1 class="row">
         
         <div2 class="col">
-            <h3>Edit Profile</h3>
+            <legend>Edit Profile</legend>
 
             <form method="post" action="" class="border p-4 mt-2" enctype="multipart/form-data">
                 {{ form_edit_profile.csrf_token }}
@@ -65,13 +65,25 @@
                         {% endif %}
                     </div5>
 
-                </fieldset>
+                    <!-- courses list - Check Box -->
+                    <hr>
+                    <legend>Courses</legend>
+                    {% for field in form_edit_profile %}
+                        {% if 'course_' in field.name %}
+                            <div class="form-group">
+                                {{ field(class="form-check-input") }}
+                                {{ field.label(class="form-check-label") }}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
 
+                </fieldset>
+                <!-- Button Save -->
                 {{ form_edit_profile.button_save_changes(class="btn btn-primary mt-2") }}
                 
             </form>
 
-        </div2>
+        </div2> <!--End Col--> 
 
     </div1> <!--End Row--> 
 
