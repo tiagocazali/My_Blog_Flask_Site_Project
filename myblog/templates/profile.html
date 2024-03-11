@@ -19,13 +19,19 @@
                 <div6 class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
 
                     <div7 class="d-flex flex-column">
-                        <span class="articles">Posts</span>
-                        <span class="number1">123</span>
+                        <span class="articles">Course</span>
+                        <span class="number1">
+                            {% if "none" in current_user.courses %}
+                                0
+                            {% else %}
+                                {{ current_user.courses.count(';') +1 }}
+                            {% endif %}
+                        </span>
                     </div7>
 
                     <div8 class="d-flex flex-column">
-                        <span class="followers">Courses</span>
-                        <span class="number2">0</span>
+                        <span class="followers">posts</span>
+                        <span class="number2">567</span>
                     </div8>
                     
                 </div6>
@@ -36,14 +42,26 @@
                     </a>
                 </div10>
 
-
             </div5>
-
         </div3>
         
     </div2>
-        
+    
 </div1>
+
+<!-- Show the user's courses like buttons -->
+<div11 class="row justify-content-center">
+
+    <div12 class="col col-4", style="text-align:center">
+
+        <strong>Courses</strong><br>
+        {% for course in current_user.courses.split(';') %}
+            <button type="button" class="btn btn-success disable mt-2">{{course}}</button>   
+        {% endfor %}
+
+    </div12>
+
+</div11>
 
 <!-- when user click in Edit Profile, the form will appear here -->
 {% block edit_profile%}

@@ -1,3 +1,4 @@
+from re import T
 from flask import render_template, redirect, url_for, flash, request
 from wtforms import EmailField
 from myblog import app, database, bcrypt
@@ -90,10 +91,14 @@ def edit_profile():
         flash("updated Successfully", "alert-success")
         return redirect(url_for("profile"))
     else:
-        #Automatic fill the form with users data
+        # Automatic fill the form with users data
         form_edit_profile.username.data = current_user.username
         form_edit_profile.email.data = current_user.email
-
+        # fill the users courses
+        for course in current_user.courses.split(';'):
+            for field in form_edit_profile:
+                if course in field.label.text:
+                    field.data = True
     
     return render_template("edit_profile.html", photo_profile=photo_profile, form_edit_profile=form_edit_profile)
 
@@ -116,6 +121,10 @@ def update_courses_list(form):
         if "course_" in field.name:
             if field.data:
                 courses_list.append(field.label.text)
+    
+    if not courses_list:
+        return "none"
+    
     return ';'.join(courses_list)
 
 
