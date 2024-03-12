@@ -1,4 +1,3 @@
-from re import T
 from flask import render_template, redirect, url_for, flash, request
 from wtforms import EmailField
 from myblog import app, database, bcrypt
@@ -9,7 +8,6 @@ from PIL import Image
 import secrets
 import os
 
-users_list = ["Tiago", "Robert", "Ana", "Vanessa", "Marcus", "Andi"]
 
 @app.route("/")
 def home():
@@ -19,7 +17,8 @@ def home():
 @app.route("/users")
 @login_required
 def users():
-    return render_template("users.html", users_list=users_list)
+    all_users = User.query.all()
+    return render_template("users.html", users_list=all_users)
 
 
 @app.route("/contact")
