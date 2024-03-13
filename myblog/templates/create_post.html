@@ -1,8 +1,62 @@
-{% extends "base.html" %}
- 
-    {% block body %}
-        <div class="container">
-            <h1> Create New Post</h1>
+{% extends "base.html" %} {% block body %}
+<div0 class="container">
 
-        </div>
-    {% endblock %}
+    <div1 class="row">
+
+        <div2 class="col">
+            <form method="post" , action="" , class="border p-4 mt-2">
+                {{ form_create_post.csrf_token }}
+                <legend>Create Post</legend>
+
+                <fieldset>
+
+                    <!-- Title -->
+                    <div3 class="form-group">
+                        {{ form_create_post.title.label(class="form-control-label") }}
+
+                        <!-- Check for invalid title -->
+                        {% if form_create_post.title.errors %} 
+                            {{ form_create_post.title(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_create_post.title.errors %} 
+                                    {{ error }} 
+                                {% endfor %}
+                            </div>
+
+                        {% else %} 
+                            {{ form_create_post.title(class="form-control") }} 
+                            
+                        {% endif %}
+                    </div3>
+
+                    <!-- Body -->
+                    <div4 class="form-group">
+                        {{ form_create_post.body.label(class="form-control-label") }}
+
+                        <!-- Check for invalid body -->
+                        {% if form_create_post.body.errors %} 
+                            {{ form_create_post.body(class="form-control is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form_create_post.body.errors %} 
+                                    {{ error }} 
+                                {% endfor %}
+                            </div>
+
+                        {% else %} 
+                            {{ form_create_post.body(class="form-control") }} 
+                        
+                        {% endif %}
+                    </div4>
+                </fieldset>
+
+                <!-- Button Save -->
+                {{ form_create_post.button_create_post(class="btn btn-primary mt-2") }}
+                
+            </form>
+
+        </div2>
+
+    </div1>
+    
+</div0>
+{% endblock %}

@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for, flash, request
 from wtforms import EmailField
 from myblog import app, database, bcrypt
-from myblog.forms import FormCreateAccount, FormLogin, FormEditProfile
-from myblog.models import User
+from myblog.forms import FormCreateAccount, FormLogin, FormEditProfile, FormCreatePost
+from myblog.models import User, Post
 from flask_login import login_user, logout_user, current_user, login_required
 from PIL import Image
 import secrets
@@ -42,7 +42,7 @@ def login():
             else:
                 return redirect(url_for("home"))
         else:
-            flash(f"Login Error! - Incorrect e-mail or password", "alert-danger")            
+            flash("Login Error! - Incorrect e-mail or password", "alert-danger")            
 
 
     if form_createAccount.validate_on_submit() and "button_submit_create_account" in request.form:
@@ -127,7 +127,18 @@ def update_courses_list(form):
     return ';'.join(courses_list)
 
 
-@app.route("/post/create")
+@app.route("/post/create", methods=["GET", "POST"])
 @login_required
 def create_post():
-    return render_template("create_post.html")
+
+    form_create_post = FormCreatePost()
+
+    if form_create_post.validate_on_submit():
+        with app.app_context():
+            post = Post(title=form_create_post.title.data, body=form_create_post.body.data, user_ID=current_user.id )
+            database.session.add(post)
+            database.session.commit()
+            flash("Post Created!", "alert-success")
+            return redirect( url_for('home') )
+
+    return render_template("create_post.html", form_create_post=form_create_post)

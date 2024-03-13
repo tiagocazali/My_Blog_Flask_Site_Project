@@ -1,7 +1,7 @@
 from tkinter.font import BOLD
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from myblog.models import User
 from flask_login import current_user
@@ -56,3 +56,9 @@ class FormEditProfile(FlaskForm):
             username_exist = User.query.filter_by(username=username.data).first()
             if username_exist:
                 raise ValidationError("Username already exist in Database.Use another Username")
+
+
+class FormCreatePost(FlaskForm):
+    title = StringField("Title: ", validators=[DataRequired(), Length(2,150)] )
+    body = TextAreaField("Your post here:")
+    button_create_post = SubmitField("Create Post")
