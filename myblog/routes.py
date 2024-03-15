@@ -1,5 +1,4 @@
 from flask import render_template, redirect, url_for, flash, request
-from wtforms import EmailField
 from myblog import app, database, bcrypt
 from myblog.forms import FormCreateAccount, FormLogin, FormEditProfile, FormCreatePost
 from myblog.models import User, Post
@@ -11,7 +10,8 @@ import os
 
 @app.route("/")
 def home():
-    return render_template("home.html")
+    all_posts = Post.query.order_by(Post.id.desc())
+    return render_template("home.html", all_posts=all_posts)
 
 
 @app.route("/users")
@@ -135,7 +135,7 @@ def create_post():
 
     if form_create_post.validate_on_submit():
         with app.app_context():
-            post = Post(title=form_create_post.title.data, body=form_create_post.body.data, user_ID=current_user.id )
+            post = Post(title=form_create_post.title.data, body=form_create_post.body.data, author=current_user )
             database.session.add(post)
             database.session.commit()
             flash("Post Created!", "alert-success")
