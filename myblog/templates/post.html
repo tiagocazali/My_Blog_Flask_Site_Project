@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container mt-3">
+
+    <div1 class="row border mt-4 p-3 mybackground">
+
+        <!-- Show user Photo and Name -->
+        <div2 class="col col-2">
+            <div4 class="image pe-2">
+                <img src="{{ url_for('static', filename='photos_profile/{}'.format(post.author.photo_profile)) }}"
+                    class="rounded" width="150">
+            </div4>
+            <br><strong>{{ post.author.username }}</strong>
+        </div2>
+
+        <!-- Show the post Title and Body and IF owner, Edit and Delete button  -->
+        <div3 class="col col-9">
+            <h3 style="display: inline-block;"> {{ post.title }} </h3>
+
+            {% if form_create_post %}
+            <a href="#edit_post" class="me-3 ms-3">Edit Post &#x270E;</a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#confirm_delete" class="text-danger">Delete Post
+                &#x1F5D1;</a>
+            {% endif %}
+
+            <p><small> Created: {{ post.create_date.strftime('%d/%m/%Y') }}</small></p>
+            <p class="mt-3">{{ post.body }}</p>
+        </div3>
+
+    </div1>
+
+</div>
+
+
+<!-- If you are the post's owner, show Edit Post -->
+{% if form_create_post %}
+<div0 class="container">
+
+    <div1 class="row">
+
+        <div2 class="col">
+            <form method="post" , id="edit_post" action="" , class="border p-4 mt-2">
+                {{ form_create_post.csrf_token }}
+                <legend>Edit Post</legend>
+
+                <fieldset>
+
+                    <!-- Title -->
+                    <div3 class="form-group">
+                        {{ form_create_post.title.label(class="form-control-label") }}
+
+                        <!-- Check for invalid title -->
+                        {% if form_create_post.title.errors %}
+                        {{ form_create_post.title(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_create_post.title.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                        {{ form_create_post.title(class="form-control") }}
+
+                        {% endif %}
+                    </div3>
+
+                    <!-- Body -->
+                    <div4 class="form-group">
+                        {{ form_create_post.body.label(class="form-control-label") }}
+
+                        <!-- Check for invalid body -->
+                        {% if form_create_post.body.errors %}
+                        {{ form_create_post.body(class="form-control is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_create_post.body.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                        {{ form_create_post.body(class="form-control") }}
+
+                        {% endif %}
+                    </div4>
+                </fieldset>
+
+                <!-- Button Save -->
+                {{ form_create_post.button_create_post(class="btn btn-primary mt-2") }}
+
+            </form>
+
+        </div2>
+
+    </div1>
+
+</div0>
+{% endif %}
+
+
+<!-- Modal - Confirm Delete Post-->
+<div class="modal fade" id="confirm_delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">DELETE POST</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Do you really want to DELETE the Post?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                <!-- if confirmed, execute the function "delete_post" in routes -->
+                <form method="POST" action="{{ url_for('delete_post', post_id=post.id) }}">
+                    <button type="submit" class="btn btn-danger">Delete Post</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

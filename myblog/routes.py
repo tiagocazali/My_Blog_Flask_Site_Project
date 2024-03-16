@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request,abort
 from myblog import app, database, bcrypt
 from myblog.forms import FormCreateAccount, FormLogin, FormEditProfile, FormCreatePost
 from myblog.models import User, Post
@@ -142,3 +142,43 @@ def create_post():
             return redirect( url_for('home') )
 
     return render_template("create_post.html", form_create_post=form_create_post)
+
+
+@app.route("/post/<post_id>", methods=["GET", "POST"])
+@login_required
+def edit_post(post_id):
+
+    post = Post.query.get(post_id)
+
+    if current_user == post.author:
+        form = FormCreatePost()
+        
+        if request.method == "GET":
+            form.title.data = post.title
+            form.body.data = post.body
+        
+        elif form.validate_on_submit():
+            post.title = form.title.data
+            post.body = form.body.data
+            database.session.commit()
+            flash("Post modified successfully", "alert-success")
+
+    else:
+        form = None
+
+    return render_template("post.html", post=post, form_create_post=form)
+
+
+@app.route("/post/<post_id>/delete", methods=["GET", "POST"])
+@login_required
+def delete_post(post_id):
+    
+    post = Post.query.get(post_id)
+
+    if current_user == post.author:
+        database.session.delete(post)
+        database.session.commit()
+        flash("Post deleted!", "alert-danger")
+        return redirect( url_for("home"))
+    else:
+        abort(403)
