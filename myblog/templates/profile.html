@@ -1,5 +1,5 @@
 {% extends "base.html" %}
- 
+
 {% block body %}
 <div1 class="container d-flex justify-content-center">
 
@@ -7,56 +7,61 @@
 
         <div3 class="d-flex align-items-center">
 
+            <!-- Photo -->
             <div4 class="image pe-2">
-                <img src="{{ photo_profile }}" class="rounded" width="200" >
+                <img src="{{ photo_profile }}" class="rounded" width="200">
             </div4>
 
             <div5 class="ml-3 w-100">
-            
+
+                <!-- Username and E-mail -->
                 <h4 class="mb-0 mt-0">{{ current_user.username }}</h4>
                 <span>{{ current_user.email }}</span>
 
                 <div6 class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
 
+                    <!-- Total courses -->
                     <div7 class="d-flex flex-column">
                         <span class="articles">Course</span>
                         <span class="number1">
                             {% if "none" in current_user.courses %}
-                                0
+                            0
                             {% else %}
-                                {{ current_user.courses.count(';') +1 }}
+                            {{ current_user.courses.count(';') +1 }}
                             {% endif %}
                         </span>
                     </div7>
 
+                    <!-- Total Posts -->
                     <div8 class="d-flex flex-column">
                         <span class="followers">posts</span>
-                        <span class="number2">567</span>
+                        <span class="number2">{{ current_user.count_posts() }}</span>
                     </div8>
-                    
+
                 </div6>
 
+                <!-- Button Edit Profile -->
                 <div10 class="button mt-2 d-flex flex-row align-items-center">
                     <a href="{{ url_for('edit_profile') }}">
-                        <button class="btn btn-sm btn-primary w-100 ml-2">Edit Profile</button>  
+                        <button class="btn btn-sm btn-primary w-100 ml-2">Edit Profile</button>
                     </a>
                 </div10>
 
             </div5>
         </div3>
-        
+
     </div2>
-    
+
 </div1>
 
 <!-- Show the user's courses like buttons -->
 <div11 class="row justify-content-center">
 
-    <div12 class="col col-4", style="text-align:center">
+    <div12 class="col col-4" , style="text-align:center">
 
         <strong>Courses</strong><br>
         {% for course in current_user.courses.split(';') %}
-            <button type="button" class="btn btn-success disable mt-2">{{course}}</button>   
+        <button type="button" class="btn btn-success disable mt-2">{{course}}</button>
         {% endfor %}
 
     </div12>
@@ -65,6 +70,6 @@
 
 <!-- when user click in Edit Profile, the form will appear here -->
 {% block edit_profile%}
-{% endblock %}
+{% endblock edit_profile %}
 
 {% endblock %}

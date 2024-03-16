@@ -1,66 +1,67 @@
 {% extends "base.html" %}
- 
+
 {% block body %}
 <div0 class="container">
     <h1>USERS</h1>
-    
-    {% for user in users_list %}
-        <div1 class="container d-flex justify-content-center">
 
-            <div2 class="card p-3">
-        
-                <div3 class="d-flex align-items-center">
-        
-                    <div4 class="image pe-2">
-                        <img src="{{ url_for('static', filename='photos_profile/{}'.format(user.photo_profile)) }}" class="rounded" width="150" >
-                    </div4>
-        
-                    <div5 class="ml-3 w-100">
-                    
-                        <h4 class="mb-0 mt-0">{{ user.username }}</h4>
-                        <span>{{ user.email }}</span>
-        
-                        <div6 class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
-        
-                            <div7 class="d-flex flex-column">
-                                <span class="articles">Course</span>
-                                <span class="number1">
-                                    {% if "none" in user.courses %}
-                                        0
-                                    {% else %}
-                                        {{ user.courses.count(';') +1 }}
-                                    {% endif %}
-                                </span>
-                            </div7>
-        
-                            <div8 class="d-flex flex-column">
-                                <span class="followers">posts</span>
-                                <span class="number2">567</span>
-                            </div8>
-                            
-                        </div6>
-        
-                    </div5>
-                </div3>
-                
-            </div2>
-            
-        </div1>
-        
-        <!-- Show the user's courses like buttons -->
-        <div11 class="row justify-content-center">
-        
-            <div12 class="col col-4 mb-3", style="text-align:center">
-        
-                <strong>Courses</strong><br>
-                {% for course in user.courses.split(';') %}
-                    <button type="button" class="btn btn-success disable mt-2">{{course}}</button>   
-                {% endfor %}
-        
-            </div12>
-            <hr>
-        
-        </div11>
+    {% for user in users_list %}
+    <div1 class="container d-flex justify-content-center">
+
+        <div2 class="card p-3">
+
+            <div3 class="d-flex align-items-center">
+
+                <div4 class="image pe-2">
+                    <img src="{{ url_for('static', filename='photos_profile/{}'.format(user.photo_profile)) }}"
+                        class="rounded" width="150">
+                </div4>
+
+                <div5 class="ml-3 w-100">
+
+                    <h4 class="mb-0 mt-0">{{ user.username }}</h4>
+                    <span>{{ user.email }}</span>
+
+                    <div6 class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+                        <div7 class="d-flex flex-column">
+                            <span class="articles">Course</span>
+                            <span class="number1">
+                                {% if "none" in user.courses %}
+                                0
+                                {% else %}
+                                {{ user.courses.count(';') +1 }}
+                                {% endif %}
+                            </span>
+                        </div7>
+
+                        <div8 class="d-flex flex-column">
+                            <span class="followers">posts</span>
+                            <span class="number2">{{user.count_posts()}}</span>
+                        </div8>
+
+                    </div6>
+
+                </div5>
+            </div3>
+
+        </div2>
+
+    </div1>
+
+    <!-- Show the user's courses like buttons -->
+    <div11 class="row justify-content-center">
+
+        <div12 class="col col-4 mb-3" , style="text-align:center">
+
+            <strong>Courses</strong><br>
+            {% for course in user.courses.split(';') %}
+            <button type="button" class="btn btn-success disable mt-2">{{course}}</button>
+            {% endfor %}
+
+        </div12>
+        <hr>
+
+    </div11>
     {% endfor %}
 
 </div0>
