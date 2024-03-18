@@ -5,7 +5,7 @@
 The My Blog App is a Flask project designed for personal study and portfolio enhancement on Python, Flask and Web. Employing SQLite for data storage and password encryption for security, it serves as a valuable showcase of skills, featuring user authentication, blog post management, and image 
 handling functionalities.
 
-![Photo Homepage](/myblog/static/capturar.JPG)
+![Photo Homepage](/myblog/static/Capturar.JPG)
 
 ## Description
 
